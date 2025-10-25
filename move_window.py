@@ -136,7 +136,12 @@ def main():
     if drag_y < frame["y"] or drag_y > frame["y"] + frame["h"]:
         drag_y = center_y
 
-    drag_point = [center_x, drag_y]
+    traffic_offset = max(24, min(frame["w"] * 0.05, frame["w"] / 4))
+    drag_x = frame["x"] + traffic_offset
+    if drag_x > frame["x"] + frame["w"] - 20:
+        drag_x = center_x
+
+    drag_point = [drag_x, drag_y]
 
     current_event = core.CGEventCreate(None)
     current_loc = core.CGEventGetLocation(current_event)
