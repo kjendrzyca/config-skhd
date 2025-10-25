@@ -315,6 +315,6 @@ shift + alt - 0 : ~/.config/skhd/.venv/bin/python ~/.config/skhd/move_window.py 
 # ----------------------------------------------------------
 # Layout switching
 # ----------------------------------------------------------
-shift + alt - e : yabai -m config layout bsp
-shift + alt - w : yabai -m config layout stack
-shift + alt - r : yabai -m config layout float
+shift + alt - e : index=$(yabai -m query --spaces --space | jq '.index'); yabai -m config --space ${index} layout bsp
+shift + alt - w : index=$(yabai -m query --spaces --space | jq '.index'); yabai -m config --space ${index} layout stack
+shift + alt - r : index=$(yabai -m query --spaces --space | jq '.index'); yabai -m config --space ${index} layout float
