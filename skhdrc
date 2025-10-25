@@ -285,16 +285,16 @@ hyper - f      : open ~
 # ----------------------------------------------------------
 
 # Focus next window
-shift + alt - j       : ~/.config/sketchybar/plugins/focus_window.sh next
-shift + alt - 0x2F    : ~/.config/sketchybar/plugins/focus_window.sh next   # .  (kVK_ANSI_Period)
-shift + alt - 0x27    : ~/.config/sketchybar/plugins/focus_window.sh next   # '  (kVK_ANSI_Quote)
+# shift + alt - j       : ~/.config/sketchybar/plugins/focus_window.sh next
+# shift + alt - 0x2F    : ~/.config/sketchybar/plugins/focus_window.sh next   # .  (kVK_ANSI_Period)
+# shift + alt - 0x27    : ~/.config/sketchybar/plugins/focus_window.sh next   # '  (kVK_ANSI_Quote)
 hyper       - 0x27    : ~/.config/sketchybar/plugins/focus_window.sh next
 alt         - tab     : ~/.config/sketchybar/plugins/focus_window.sh next
 
 # Focus previous window
-shift + alt - k       : ~/.config/sketchybar/plugins/focus_window.sh prev
-shift + alt - 0x2B    : ~/.config/sketchybar/plugins/focus_window.sh prev   # ,  (kVK_ANSI_Comma)
-shift + alt - 0x29    : ~/.config/sketchybar/plugins/focus_window.sh prev   # ;  (kVK_ANSI_Semicolon)
+# shift + alt - k       : ~/.config/sketchybar/plugins/focus_window.sh prev
+# shift + alt - 0x2B    : ~/.config/sketchybar/plugins/focus_window.sh prev   # ,  (kVK_ANSI_Comma)
+# shift + alt - 0x29    : ~/.config/sketchybar/plugins/focus_window.sh prev   # ;  (kVK_ANSI_Semicolon)
 hyper       - 0x29    : ~/.config/sketchybar/plugins/focus_window.sh prev
 alt         - 0x32    : ~/.config/sketchybar/plugins/focus_window.sh prev   # `  (kVK_ANSI_Grave)
 
@@ -311,3 +311,10 @@ shift + alt - 7 : ~/.config/skhd/.venv/bin/python ~/.config/skhd/move_window.py 
 shift + alt - 8 : ~/.config/skhd/.venv/bin/python ~/.config/skhd/move_window.py 8 28
 shift + alt - 9 : ~/.config/skhd/.venv/bin/python ~/.config/skhd/move_window.py 9 25
 shift + alt - 0 : ~/.config/skhd/.venv/bin/python ~/.config/skhd/move_window.py 10 29
+
+# ----------------------------------------------------------
+# Layout switching
+# ----------------------------------------------------------
+shift + alt - e : yabai -m config layout bsp
+shift + alt - w : yabai -m config layout stack
+shift + alt - r : yabai -m config layout float
