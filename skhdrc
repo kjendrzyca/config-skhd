@@ -313,6 +313,17 @@ shift + alt - 9 : ~/.config/skhd/.venv/bin/python ~/.config/skhd/move_window.py 
 shift + alt - 0 : ~/.config/skhd/.venv/bin/python ~/.config/skhd/move_window.py 10 29
 
 # ----------------------------------------------------------
+# Reorder windows within current space
+# ----------------------------------------------------------
+shift + alt - 0x29 : ~/.config/skhd/reorder_window.sh prev   # ;  (kVK_ANSI_Semicolon)
+shift + alt - 0x27 : ~/.config/skhd/reorder_window.sh next   # '  (kVK_ANSI_Quote)
+
+# ----------------------------------------------------------
+# Utility shortcuts
+# ----------------------------------------------------------
+hyper - 0x2A : ~/.config/sketchybar/plugins/sync_window_order.sh   # \ (kVK_ANSI_Backslash)
+
+# ----------------------------------------------------------
 # Layout switching
 # ----------------------------------------------------------
 shift + alt - e : index=$(yabai -m query --spaces --space | jq '.index'); yabai -m config --space ${index} layout bsp
