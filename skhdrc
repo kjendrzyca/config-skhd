@@ -277,7 +277,7 @@
 # ----------------------------------------------------------
 # Launchers
 # ----------------------------------------------------------
-hyper - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
+hyper - return : open -na "Kitty" --args --single-instance -d ~
 hyper - f      : open ~
 
 # ----------------------------------------------------------
