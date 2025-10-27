@@ -298,6 +298,18 @@ alt         - tab     : ~/.config/sketchybar/plugins/focus_window.sh next
 hyper       - 0x29    : ~/.config/sketchybar/plugins/focus_window.sh prev
 alt         - 0x32    : ~/.config/sketchybar/plugins/focus_window.sh prev   # `  (kVK_ANSI_Grave)
 
+# Focus specific window slots shown in SketchyBar
+hyper - 1 : ~/.config/sketchybar/plugins/focus_window.sh 1
+hyper - 2 : ~/.config/sketchybar/plugins/focus_window.sh 2
+hyper - 3 : ~/.config/sketchybar/plugins/focus_window.sh 3
+hyper - 4 : ~/.config/sketchybar/plugins/focus_window.sh 4
+hyper - 5 : ~/.config/sketchybar/plugins/focus_window.sh 5
+hyper - 6 : ~/.config/sketchybar/plugins/focus_window.sh 6
+hyper - 7 : ~/.config/sketchybar/plugins/focus_window.sh 7
+hyper - 8 : ~/.config/sketchybar/plugins/focus_window.sh 8
+hyper - 9 : ~/.config/sketchybar/plugins/focus_window.sh 9
+hyper - 0 : ~/.config/sketchybar/plugins/focus_window.sh 10
+
 # ----------------------------------------------------------
 # Move focused window to numbered spaces via Mission Control shortcuts
 # ----------------------------------------------------------
