@@ -14,6 +14,7 @@ if [ -f "$CONFIG_FILE" ]; then
 fi
 : "${EXCLUDED_APPS:=()}"
 : "${EXCLUDE_FLOATING_WINDOWS:=false}"
+: "${INCLUDE_FLOATING_APPS:=()}"
 
 if [ "$#" -ne 1 ]; then
   exit 0
@@ -42,9 +43,16 @@ else
   EXCLUDE_FLOATING_JSON=false
 fi
 
+if [ "${#INCLUDE_FLOATING_APPS[@]}" -gt 0 ]; then
+  INCLUDE_FLOATING_JSON=$(printf '%s
+' "${INCLUDE_FLOATING_APPS[@]}" | $JQ_BIN -R . | $JQ_BIN -s .)
+else
+  INCLUDE_FLOATING_JSON='[]'
+fi
+
 WINDOW_IDS=()
 if [ -x "$PLUGIN_DIR/window_order_state.py" ]; then
-  export SPACE_JSON WINDOWS_JSON EXCLUDED_APPS_JSON EXCLUDE_FLOATING_JSON
+  export SPACE_JSON WINDOWS_JSON EXCLUDED_APPS_JSON EXCLUDE_FLOATING_JSON INCLUDE_FLOATING_JSON
   ORDERED_WINDOWS=$($PYTHON_BIN "$PLUGIN_DIR/window_order_state.py" order)
   if [ -n "$ORDERED_WINDOWS" ]; then
     while IFS= read -r id; do
@@ -104,12 +112,29 @@ if [ -z "$TARGET_ID" ]; then
   exit 0
 fi
 
-if $YABAI_BIN -m window --swap "$TARGET_ID" >/dev/null 2>&1; then
-  $YABAI_BIN -m window --focus "$CURRENT_ID" >/dev/null 2>&1 || true
+CURRENT_FLOATING=$(printf '%s\n' "$WINDOWS_JSON" | $JQ_BIN -r --arg id "$CURRENT_ID" 'map(select(.id == ($id | tonumber))) | .[0]."is-floating" // false')
+TARGET_FLOATING=$(printf '%s\n' "$WINDOWS_JSON" | $JQ_BIN -r --arg id "$TARGET_ID" 'map(select(.id == ($id | tonumber))) | .[0]."is-floating" // false')
+
+SWAP_ALLOWED=true
+if [ "$CURRENT_FLOATING" = "true" ] || [ "$TARGET_FLOATING" = "true" ]; then
+  SWAP_ALLOWED=false
+fi
+
+SWAP_SUCCESS=false
+if [ "$SWAP_ALLOWED" = "true" ]; then
+  if $YABAI_BIN -m window --swap "$TARGET_ID" >/dev/null 2>&1; then
+    SWAP_SUCCESS=true
+    $YABAI_BIN -m window --focus "$CURRENT_ID" >/dev/null 2>&1 || true
+  fi
+else
+  SWAP_SUCCESS=true
+fi
+
+if [ "$SWAP_SUCCESS" = "true" ]; then
   if [ -x "$PLUGIN_DIR/window_order_state.py" ]; then
     SPACE_JSON=$($YABAI_BIN -m query --spaces --space)
     WINDOWS_JSON=$($YABAI_BIN -m query --windows --space)
-    export SPACE_JSON WINDOWS_JSON EXCLUDED_APPS_JSON EXCLUDE_FLOATING_JSON
+    export SPACE_JSON WINDOWS_JSON EXCLUDED_APPS_JSON EXCLUDE_FLOATING_JSON INCLUDE_FLOATING_JSON
     $PYTHON_BIN "$PLUGIN_DIR/window_order_state.py" swap "$CURRENT_ID" "$TARGET_ID" >/dev/null 2>&1 || true
   fi
   $SKETCHYBAR_BIN --trigger windows_update >/dev/null 2>&1 || true
